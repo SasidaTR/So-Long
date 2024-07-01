@@ -23,13 +23,13 @@
 
 typedef struct s_game
 {
+	char	*map_file;
 	void	*mlx;
 	void	*win;
 	void	*img1;
 	void	*img2;
 	int		img_width;
 	int		img_height;
-	char	*map_file;
 }	t_game;
 
 // libft
@@ -40,6 +40,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 
 // src
-int	get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line);
+void	error_exit(char *message);
+void	display_map(t_game *game);
 
 #endif

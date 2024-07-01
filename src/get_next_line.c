@@ -16,11 +16,40 @@ static char	*read_line(int fd, char *leftover)
 	return (leftover);
 }
 
+static int	handle_newline(char **line, char **leftover)
+{
+	char	*newline;
+	char	*temp;
+
+	if ((newline = ft_strchr(*leftover, '\n')))
+	{
+		*newline = '\0';
+		*line = ft_strdup(*leftover);
+		temp = ft_strdup(newline + 1);
+		free(*leftover);
+		*leftover = temp;
+		return (1);
+	}
+	return (0);
+}
+
+static int	handle_eof(char **line, char **leftover)
+{
+	if (**leftover)
+	{
+		*line = ft_strdup(*leftover);
+		free(*leftover);
+		*leftover = NULL;
+		return (1);
+	}
+	free(*leftover);
+	*leftover = NULL;
+	return (0);
+}
+
 int	get_next_line(int fd, char **line)
 {
 	static char	*leftover;
-	char		*newline;
-	char		*temp;
 
 	if (!leftover)
 		leftover = ft_strdup("");
@@ -29,17 +58,7 @@ int	get_next_line(int fd, char **line)
 	leftover = read_line(fd, leftover);
 	if (!leftover)
 		return (-1);
-	if ((newline = ft_strchr(leftover, '\n')))
-	{
-		*newline = '\0';
-		*line = ft_strdup(leftover);
-		temp = ft_strdup(newline + 1);
-		free(leftover);
-		leftover = temp;
+	if (handle_newline(line, &leftover))
 		return (1);
-	}
-	*line = ft_strdup(leftover);
-	free(leftover);
-	leftover = NULL;
-	return (0);
+	return (handle_eof(line, &leftover));
 }
