@@ -2,7 +2,7 @@ NAME = so_long
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-SRC = $(wildcard src/*.c) # $(wildcard libft/*.c)
+SRC = $(wildcard src/*.c) $(wildcard libft/*.c)
 OBJ_DIR = obj
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
 
