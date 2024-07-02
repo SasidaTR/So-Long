@@ -16,27 +16,29 @@ int	close_window(t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game	game;
+	int		width;
+	int		height;
 
 	if (argc != 2)
 	{
 		printf("Usage: %s <map.ber>\n", argv[0]);
 		return (1);
 	}
-	game.map_file = argv[1];
+
+	get_map_size(argv[1], &width, &height);
+
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		error_exit("Failed to initialize mlx");
-	game.win = mlx_new_window(game.mlx, 800, 600, "Nom du jeu");
+
+	game.win = mlx_new_window(game.mlx, width * 100, height * 100, "Nom du jeu");
 	if (!game.win)
 		error_exit("Failed to create window");
-	game.zero = mlx_xpm_file_to_image(game.mlx, "graphics/0.xpm", &game.img_width, &game.img_height);
-	if (!game.zero)
-		error_exit("Failed to load the 0s");
-	game.one = mlx_xpm_file_to_image(game.mlx, "graphics/1.xpm", &game.img_width, &game.img_height);
-	if (!game.one)
-		error_exit("Failed to load the 1s");
-	display_map(&game);
+
+	display_map(&game, argv[1]);
+
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_loop(game.mlx);
+
 	return (0);
 }
