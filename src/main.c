@@ -29,11 +29,11 @@ int	main(int argc, char **argv)
 	game.win = mlx_new_window(game.mlx, 800, 600, "Nom du jeu");
 	if (!game.win)
 		error_exit("Failed to create window");
-	game.img1 = mlx_xpm_file_to_image(game.mlx, "graphics/0.xpm", &game.img_width, &game.img_height);
-	if (!game.img1)
+	game.zero = mlx_xpm_file_to_image(game.mlx, "graphics/0.xpm", &game.img_width, &game.img_height);
+	if (!game.zero)
 		error_exit("Failed to load the 0s");
-	game.img2 = mlx_xpm_file_to_image(game.mlx, "graphics/1.xpm", &game.img_width, &game.img_height);
-	if (!game.img2)
+	game.one = mlx_xpm_file_to_image(game.mlx, "graphics/1.xpm", &game.img_width, &game.img_height);
+	if (!game.one)
 		error_exit("Failed to load the 1s");
 	display_map(&game);
 	mlx_hook(game.win, 17, 0, close_window, &game);

@@ -26,11 +26,24 @@ typedef struct s_game
 	char	*map_file;
 	void	*mlx;
 	void	*win;
-	void	*img1;
-	void	*img2;
+	void	*zero;
+	void	*one;
 	int		img_width;
 	int		img_height;
 }	t_game;
+
+typedef struct s_map
+{
+	char	*map_file;
+	void	*zero;
+	void	*one;
+}	t_map;
+
+typedef struct s_design
+{
+	int		img_width;
+	int		img_height;
+}	t_design;
 
 // libft
 void	*ft_memcpy(void *dest, const void *src, size_t n);
