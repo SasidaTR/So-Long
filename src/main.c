@@ -9,6 +9,8 @@ void	error_exit(char *message)
 int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 	exit(0);
 	return (0);
 }
@@ -36,9 +38,6 @@ int	main(int argc, char **argv)
 	map.zero = mlx_xpm_file_to_image(game.mlx, "graphics/0.xpm", &map.design->img_width, &map.design->img_height);
 	if (!map.zero)
 		error_exit("Failed to load the 0s");
-	game.win = mlx_new_window(game.mlx, width * map.design->img_width, height * map.design->img_height, "Nom du jeu");
-	if (!game.win)
-		error_exit("Failed to create window");
 	map.one = mlx_xpm_file_to_image(game.mlx, "graphics/1.xpm", &map.design->img_width, &map.design->img_height);
 	if (!map.one)
 		error_exit("Failed to load the 1s");
@@ -51,8 +50,13 @@ int	main(int argc, char **argv)
 	map.p = mlx_xpm_file_to_image(game.mlx, "graphics/p.xpm", &map.design->img_width, &map.design->img_height);
 	if (!map.p)
 		error_exit("Failed to load the Ps");
+	game.win = mlx_new_window(game.mlx, width * map.design->img_width, height * map.design->img_height, "Nom du jeu");
+	if (!game.win)
+		error_exit("Failed to create window");
+	game.map = &map;
 	display_map(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);
+	mlx_key_hook(game.win, key_press, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }

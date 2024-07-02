@@ -30,6 +30,9 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
+	int		player_x;
+	int		player_y;
+	t_map	*map;
 }	t_game;
 
 // libft
@@ -42,7 +45,9 @@ size_t	ft_strlen(const char *s);
 // src
 int		get_next_line(int fd, char **line);
 void	error_exit(char *message);
+int		close_window(t_game *game);
 void	get_map_size(char *file, int *width, int *height);
 void	display_map(t_game *game, t_map *map);
+int		key_press(int keycode, t_game *game);
 
 #endif
