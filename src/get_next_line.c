@@ -6,12 +6,15 @@ static char	*read_line(int fd, char *leftover)
 	int		bytes_read;
 	char	*newline;
 
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		leftover = ft_strjoin(leftover, buffer);
-		if ((newline = ft_strchr(leftover, '\n')))
+		newline = ft_strchr(leftover, '\n');
+		if (newline)
 			return (leftover);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	return (leftover);
 }
@@ -21,7 +24,8 @@ static int	handle_newline(char **line, char **leftover)
 	char	*newline;
 	char	*temp;
 
-	if ((newline = ft_strchr(*leftover, '\n')))
+	newline = ft_strchr(*leftover, '\n');
+	if (newline)
 	{
 		*newline = '\0';
 		*line = ft_strdup(*leftover);

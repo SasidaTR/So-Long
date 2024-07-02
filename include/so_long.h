@@ -43,6 +43,6 @@ size_t	ft_strlen(const char *s);
 int		get_next_line(int fd, char **line);
 void	error_exit(char *message);
 void	get_map_size(char *file, int *width, int *height);
-void	display_map(t_game *game, char *argv);
+void	display_map(t_game *game, t_map *map);
 
 #endif
