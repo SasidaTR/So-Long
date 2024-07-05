@@ -1,37 +1,15 @@
 #include "../include/so_long.h"
 
-void	count_collectables(t_game *game)
-{
-	int y, x;
-	
-	game->total_collectables = 0;
-	for (y = 0; game->map->map[y]; y++)
-	{
-		for (x = 0; game->map->map[y][x]; x++)
-		{
-			if (game->map->map[y][x] == 'C')
-				game->total_collectables++;
-		}
-	}
-}
-
 void	move_player(t_game *game, int new_x, int new_y)
 {
-	char	next_cell = game->map->map[game->player_y + new_y][game->player_x + new_x];
-
-	if (next_cell == '1')
+	if (game->map->map[game->player_y + new_y ][game->player_x + new_x] == '1')
 		printf("Invalid move\n");
-	else if (next_cell == 'E' && game->collectables < game->total_collectables)
-		printf("Collect all items before exiting\n");
 	else
 	{
-		if (next_cell == 'C')
-			game->collectables++;
 		game->map->map[game->player_y][game->player_x] = '0';
 		game->player_x += new_x;
 		game->player_y += new_y;
 		game->map->map[game->player_y][game->player_x] = 'P';
-
 		display_map(game, game->map);
 	}
 }
