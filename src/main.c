@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/05 15:11:31 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/05 15:11:35 by trischma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/so_long.h"
 
 int	close_window(t_game *game)
@@ -59,6 +71,8 @@ int	main(int argc, char **argv)
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &init.width, &init.height, &map);
 	initialize_game(&game, &map, &init);
+	game.collectables = 0;
+	game.total_collectables = count_collectables(&map);
 	display_map(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_key_hook(game.win, key_press, &game);

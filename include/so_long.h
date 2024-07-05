@@ -59,7 +59,7 @@ void	error_exit(char *message);
 int		close_window(t_game *game);
 void	get_map_size(char *file, int *width, int *height, t_map *map);
 void	display_map(t_game *game, t_map *map);
-void	redraw_map(t_game *game, t_map *map);
+int 	count_collectables(t_map *map);
 int		key_press(int keycode, t_game *game);
 
 #endif

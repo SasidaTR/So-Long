@@ -1,11 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/05 15:11:31 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/05 15:11:35 by trischma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/so_long.h"
 
 void	move_player(t_game *game, int new_x, int new_y)
 {
-	if (game->map->map[game->player_y + new_y ][game->player_x + new_x] == '1')
+	char	next_cell;
+
+	next_cell = game->map->map[game->player_y + new_y][game->player_x + new_x];
+	if (next_cell == '1')
 		printf("Invalid move\n");
+	else if (next_cell == 'E')
+	{
+		if (game->collectables < game->total_collectables)
+			printf("Collect all items before exiting\n");
+		else
+		{
+			printf("You win!\n");
+			close_window(game);
+		}
+	}
 	else
 	{
+		if (next_cell == 'C')
+			game->collectables++;
 		game->map->map[game->player_y][game->player_x] = '0';
 		game->player_x += new_x;
 		game->player_y += new_y;
