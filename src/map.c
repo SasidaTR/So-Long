@@ -31,6 +31,20 @@ void	display_map(t_game *game, t_map *map)
 	}
 }
 
+int count_collectables(t_map *map)
+{
+	int y, x, count = 0;
+	for (y = 0; map->map[y]; y++)
+	{
+		for (x = 0; map->map[y][x]; x++)
+		{
+			if (map->map[y][x] == 'C')
+				count++;
+		}
+	}
+	return count;
+}
+
 void	get_map_size(char *file, int *width, int *height, t_map *map)
 {
 	int		fd;

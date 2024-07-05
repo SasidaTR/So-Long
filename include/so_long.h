@@ -35,6 +35,8 @@ typedef struct s_game
 	void	*win;
 	int		player_x;
 	int		player_y;
+	int		collectables;
+    int		total_collectables;
 	t_map	*map;
 }	t_game;
 
