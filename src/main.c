@@ -57,7 +57,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
-	get_map_size(map.map_file, &init.width, &init.height);
+	get_map_size(map.map_file, &init.width, &init.height, &map);
 	initialize_game(&game, &map, &init);
 	display_map(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);
