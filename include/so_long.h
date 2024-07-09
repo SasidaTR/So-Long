@@ -44,6 +44,11 @@ typedef struct s_game
 	int		player_y;
 	int		collectables;
 	int		total_collectables;
+	void	*player_img_up;
+	void	*player_img_down;
+	void	*player_img_left;
+	void	*player_img_right;
+	void	*current_player_img;
 	t_map	*map;
 }	t_game;
 
@@ -63,7 +68,6 @@ size_t	ft_strlen(const char *s);
 // utils
 void	error_exit(char *message);
 int		close_window(t_game *game);
-int		is_path_valid(t_map *map);
 
 // src
 int		get_next_line(int fd, char **line);
