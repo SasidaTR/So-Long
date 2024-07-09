@@ -65,14 +65,16 @@ int	main(int argc, char **argv)
 	t_game_init	init;
 	t_game		game;
 	t_map		map;
+	t_counts	counts;
 
 	if (argc != 2)
 		return (printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &map);
 	validate_map_border(&map, &init.width, &init.height);
+	count_things(&map, &counts);
 	game.collectables = 0;
-	game.total_collectables = count_collectables(&map);
+	game.total_collectables = counts.collectables;
 	initialize_game(&game, &map, &init);
 	display_map(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);

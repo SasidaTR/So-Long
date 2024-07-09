@@ -41,28 +41,6 @@ void	display_map(t_game *game, t_map *map)
 	}
 }
 
-int	count_collectables(t_map *map)
-{
-	int	y;
-	int	x;
-	int	count;
-
-	y = 0;
-	count = 0;
-	while (map->map[y])
-	{
-		x = 0;
-		while (map->map[y][x])
-		{
-			if (map->map[y][x] == 'C')
-				count++;
-			x++;
-		}
-		y++;
-	}
-	return (count);
-}
-
 void	read_map_line(int fd, t_map *map, int *line_count)
 {
 	char	*line;

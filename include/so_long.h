@@ -9,6 +9,13 @@
 
 # define BUFFER_SIZE 32
 
+typedef struct s_counts
+{
+	int		collectables;
+	int		players;
+	int		exits;
+}	t_counts;
+
 typedef struct s_design
 {
 	int		img_width;
@@ -56,12 +63,13 @@ size_t	ft_strlen(const char *s);
 // utils
 void	error_exit(char *message);
 int		close_window(t_game *game);
+int		is_path_valid(t_map *map);
 
 // src
 int		get_next_line(int fd, char **line);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
-int		count_collectables(t_map *map);
+void	count_things(t_map *map, t_counts *counts);
 int		key_press(int keycode, t_game *game);
 
 #endif
