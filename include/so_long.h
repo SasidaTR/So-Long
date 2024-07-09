@@ -53,10 +53,12 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 
-// src
-int		get_next_line(int fd, char **line);
+// utils
 void	error_exit(char *message);
 int		close_window(t_game *game);
+
+// src
+int		get_next_line(int fd, char **line);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
 int		count_collectables(t_map *map, int *width, int *height);

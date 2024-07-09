@@ -1,32 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 15:11:31 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/05 15:11:35 by trischma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/so_long.h"
-
-int	close_window(t_game *game)
-{
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	free(game->map->design);
-	exit(0);
-	return (0);
-}
-
-void	error_exit(char *message)
-{
-	perror(message);
-	exit(EXIT_FAILURE);
-}
 
 void	initialize_images(t_game *game, t_map *map)
 {
@@ -60,6 +32,35 @@ void	initialize_game(t_game *game, t_map *map, t_game_init *init)
 	game->map = map;
 }
 
+void	validate_map_border(t_map *map)
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+
+	width = 0;
+	while (map->map[0][width])
+		width++;
+	height = 0;
+	while (map->map[height])
+		height++;
+	x = 0;
+	while (x < width)
+	{
+		if (map->map[0][x] != '1' || map->map[height - 1][x] != '1')
+			error_exit("Error: map borders");
+		x++;
+	}
+	y = 0;
+	while (y < height)
+	{
+		if (map->map[y][0] != '1' || map->map[y][width - 1] != '1')
+			error_exit("Error: map borders");
+		y++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_game_init	init;
@@ -70,6 +71,7 @@ int	main(int argc, char **argv)
 		return (printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &map);
+	validate_map_border(&map);
 	game.collectables = 0;
 	game.total_collectables = count_collectables(&map,
 			&init.width, &init.height);
