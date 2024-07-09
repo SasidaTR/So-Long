@@ -36,7 +36,7 @@ typedef struct s_game
 	int		player_x;
 	int		player_y;
 	int		collectables;
-    int		total_collectables;
+	int		total_collectables;
 	t_map	*map;
 }	t_game;
 
@@ -61,7 +61,7 @@ int		close_window(t_game *game);
 int		get_next_line(int fd, char **line);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
-int		count_collectables(t_map *map, int *width, int *height);
+int		count_collectables(t_map *map);
 int		key_press(int keycode, t_game *game);
 
 #endif

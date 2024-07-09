@@ -32,30 +32,29 @@ void	initialize_game(t_game *game, t_map *map, t_game_init *init)
 	game->map = map;
 }
 
-void	validate_map_border(t_map *map)
+void	validate_map_border(t_map *map, int *width, int *height)
 {
 	int	x;
 	int	y;
-	int	width;
-	int	height;
 
-	width = 0;
-	while (map->map[0][width])
-		width++;
-	height = 0;
-	while (map->map[height])
-		height++;
+
+	*width = 0;
+	while (map->map[0][*width])
+		(*width)++;
+	*height = 0;
+	while (map->map[*height])
+		(*height)++;
 	x = 0;
-	while (x < width)
+	while (x < *width)
 	{
-		if (map->map[0][x] != '1' || map->map[height - 1][x] != '1')
+		if (map->map[0][x] != '1' || map->map[*height - 1][x] != '1')
 			error_exit("Error: map borders");
 		x++;
 	}
 	y = 0;
-	while (y < height)
+	while (y < *height)
 	{
-		if (map->map[y][0] != '1' || map->map[y][width - 1] != '1')
+		if (map->map[y][0] != '1' || map->map[y][*width - 1] != '1')
 			error_exit("Error: map borders");
 		y++;
 	}
@@ -71,10 +70,9 @@ int	main(int argc, char **argv)
 		return (printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &map);
-	validate_map_border(&map);
+	validate_map_border(&map, &init.width, &init.height);
 	game.collectables = 0;
-	game.total_collectables = count_collectables(&map,
-			&init.width, &init.height);
+	game.total_collectables = count_collectables(&map);
 	initialize_game(&game, &map, &init);
 	display_map(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);

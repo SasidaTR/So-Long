@@ -41,14 +41,12 @@ void	display_map(t_game *game, t_map *map)
 	}
 }
 
-int	count_collectables(t_map *map, int *width, int *height)
+int	count_collectables(t_map *map)
 {
 	int	y;
 	int	x;
 	int	count;
 
-	*width = 0;
-	*height = 0;
 	y = 0;
 	count = 0;
 	while (map->map[y])
@@ -60,11 +58,8 @@ int	count_collectables(t_map *map, int *width, int *height)
 				count++;
 			x++;
 		}
-		if (x > *width)
-			*width = x;
 		y++;
 	}
-	*height = y;
 	return (count);
 }
 
