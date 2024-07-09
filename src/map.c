@@ -1,6 +1,6 @@
 #include "../include/so_long.h"
 
-void	put_image_to_window(t_game *game, t_map *map, int x, int y)
+void put_image_to_window(t_game *game, t_map *map, int x, int y)
 {
 	if (map->map[y][x] == '0')
 		mlx_put_image_to_window(game->mlx, game->win, map->zero,
@@ -16,7 +16,7 @@ void	put_image_to_window(t_game *game, t_map *map, int x, int y)
 			x * map->design->img_width, y * map->design->img_height);
 	else if (map->map[y][x] == 'P')
 	{
-		mlx_put_image_to_window(game->mlx, game->win, game->current_player_img,
+		mlx_put_image_to_window(game->mlx, game->win, map->design->current_player_img,
 			x * map->design->img_width, y * map->design->img_height);
 		game->player_x = x;
 		game->player_y = y;

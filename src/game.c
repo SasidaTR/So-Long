@@ -1,19 +1,19 @@
 #include "../include/so_long.h"
 
-void	update_player(t_game *game, int new_x, int new_y)
+void update_player(t_game *game, int new_x, int new_y)
 {
 	game->map->map[game->player_y][game->player_x] = '0';
 	game->player_x += new_x;
 	game->player_y += new_y;
 	game->map->map[game->player_y][game->player_x] = 'P';
 	if (new_y == -1)
-		game->current_player_img = game->player_img_up;
+		game->map->design->current_player_img = game->map->design->player_img_up;
 	else if (new_y == 1)
-		game->current_player_img = game->player_img_down;
+		game->map->design->current_player_img = game->map->design->player_img_down;
 	else if (new_x == -1)
-		game->current_player_img = game->player_img_left;
+		game->map->design->current_player_img = game->map->design->player_img_left;
 	else if (new_x == 1)
-		game->current_player_img = game->player_img_right;
+		game->map->design->current_player_img = game->map->design->player_img_right;
 }
 
 void	move_player(t_game *game, int new_x, int new_y)

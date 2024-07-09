@@ -20,6 +20,11 @@ typedef struct s_design
 {
 	int		img_width;
 	int		img_height;
+	void	*player_img_up;
+	void	*player_img_down;
+	void	*player_img_left;
+	void	*player_img_right;
+	void	*current_player_img;
 }	t_design;
 
 typedef struct s_map
@@ -44,11 +49,6 @@ typedef struct s_game
 	int		player_y;
 	int		collectables;
 	int		total_collectables;
-	void	*player_img_up;
-	void	*player_img_down;
-	void	*player_img_left;
-	void	*player_img_right;
-	void	*current_player_img;
 	t_map	*map;
 }	t_game;
 
