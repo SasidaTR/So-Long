@@ -54,11 +54,11 @@ typedef struct s_game
 	t_count	*count;
 }	t_game;
 
-typedef struct s_game_init
+typedef struct s_init
 {
 	int		width;
 	int		height;
-}	t_game_init;
+}	t_init;
 
 // libft
 char	*ft_itoa(int n);
