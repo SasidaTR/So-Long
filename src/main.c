@@ -1,6 +1,6 @@
 #include "../include/so_long.h"
 
-void initialize_images(t_game *game, t_map *map)
+void	initialize_images(t_game *game, t_map *map)
 {
 	map->zero = mlx_xpm_file_to_image(game->mlx, "graf/0.xpm",
 			&map->design->img_width, &map->design->img_height);

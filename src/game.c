@@ -2,8 +2,8 @@
 
 void	display_move_count(t_game *game)
 {
-	char *move_count_str;
-	
+	char	*move_count_str;
+
 	move_count_str = ft_itoa(game->count->move_count);
 	if (!move_count_str)
 		error_exit("Failed to convert move count to string");
@@ -11,26 +11,30 @@ void	display_move_count(t_game *game)
 	free(move_count_str);
 }
 
-void update_player(t_game *game, int new_x, int new_y)
+void	update_player(t_game *game, int new_x, int new_y)
 {
 	game->map->map[game->player_y][game->player_x] = '0';
 	game->player_x += new_x;
 	game->player_y += new_y;
 	game->map->map[game->player_y][game->player_x] = 'P';
 	if (new_y == -1)
-		game->map->design->current_player_img = game->map->design->player_img_up;
+		game->map->design->current_player_img
+			= game->map->design->player_img_up;
 	else if (new_y == 1)
-		game->map->design->current_player_img = game->map->design->player_img_down;
+		game->map->design->current_player_img
+			= game->map->design->player_img_down;
 	else if (new_x == -1)
-		game->map->design->current_player_img = game->map->design->player_img_left;
+		game->map->design->current_player_img
+			= game->map->design->player_img_left;
 	else if (new_x == 1)
-		game->map->design->current_player_img = game->map->design->player_img_right;
+		game->map->design->current_player_img
+			= game->map->design->player_img_right;
 }
 
 void	move_player(t_game *game, int new_x, int new_y)
 {
-	char next_cell;
-	
+	char	next_cell;
+
 	next_cell = game->map->map[game->player_y + new_y][game->player_x + new_x];
 	if (next_cell == '1')
 		printf("Invalid move\n");
@@ -54,7 +58,6 @@ void	move_player(t_game *game, int new_x, int new_y)
 		display_move_count(game);
 	}
 }
-
 
 int	key_press(int keycode, t_game *game)
 {
