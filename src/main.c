@@ -1,39 +1,5 @@
 #include "../include/so_long.h"
 
-// void validate_map_reachable(t_map *map)
-// {
-//     int player_x, player_y;
-//     int x, y;
-
-//     // Trouver la position du joueur
-//     for (y = 0; map->map[y]; y++)
-//         for (x = 0; map->map[y][x]; x++)
-//             if (map->map[y][x] == 'P')
-//             {
-//                 player_x = x;
-//                 player_y = y;
-//                 break;
-//             }
-
-//     // Vérifier si chaque collectable (C) est accessible
-//     for (y = 0; map->map[y]; y++)
-//         for (x = 0; map->map[y][x]; x++)
-//             if (map->map[y][x] == 'C')
-//                 if (!is_reachable(map->map, map->width, map->height, player_x, player_y, x, y))
-//                     error_exit("Error: unreachable collectable");
-
-//     // Vérifier si la sortie (E) est accessible
-//     for (y = 0; map->map[y]; y++)
-//         for (x = 0; map->map[y][x]; x++)
-//             if (map->map[y][x] == 'E')
-//                 if (!is_reachable(map->map, map->width, map->height, player_x, player_y, x, y))
-//                     error_exit("Error: unreachable exit");
-// }
-
-
-
-
-
 void	initialize_images(t_game *game, t_map *map)
 {
 	map->zero = mlx_xpm_file_to_image(game->mlx, "graf/0.xpm",
@@ -105,7 +71,7 @@ void	validate_map_border(t_map *map, int *width, int *height)
 
 int	main(int argc, char **argv)
 {
-	t_init	init;
+	t_init		init;
 	t_game		game;
 	t_map		map;
 	t_count		count;
