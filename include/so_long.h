@@ -9,12 +9,13 @@
 
 # define BUFFER_SIZE 32
 
-typedef struct s_counts
+typedef struct s_count
 {
 	int		collectables;
 	int		players;
 	int		exits;
-}	t_counts;
+	int		move_count;
+}	t_count;
 
 typedef struct s_design
 {
@@ -50,6 +51,7 @@ typedef struct s_game
 	int		collectables;
 	int		total_collectables;
 	t_map	*map;
+	t_count	*count;
 }	t_game;
 
 typedef struct s_game_init
@@ -59,6 +61,7 @@ typedef struct s_game_init
 }	t_game_init;
 
 // libft
+char	*ft_itoa(int n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
@@ -68,12 +71,12 @@ size_t	ft_strlen(const char *s);
 // utils
 void	error_exit(char *message);
 int		close_window(t_game *game);
+void	count_things(t_map *map, t_count *count);
 
 // src
 int		get_next_line(int fd, char **line);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
-void	count_things(t_map *map, t_counts *counts);
 int		key_press(int keycode, t_game *game);
 
 #endif

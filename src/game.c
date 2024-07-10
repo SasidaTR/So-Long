@@ -1,5 +1,16 @@
 #include "../include/so_long.h"
 
+void	display_move_count(t_game *game)
+{
+	char *move_count_str;
+	
+	move_count_str = ft_itoa(game->count->move_count);
+	if (!move_count_str)
+		error_exit("Failed to convert move count to string");
+	mlx_string_put(game->mlx, game->win, 10, 10, 0x000000, move_count_str);
+	free(move_count_str);
+}
+
 void update_player(t_game *game, int new_x, int new_y)
 {
 	game->map->map[game->player_y][game->player_x] = '0';
@@ -18,7 +29,9 @@ void update_player(t_game *game, int new_x, int new_y)
 
 void	move_player(t_game *game, int new_x, int new_y)
 {
-	char next_cell = game->map->map[game->player_y + new_y][game->player_x + new_x];
+	char next_cell;
+	
+	next_cell = game->map->map[game->player_y + new_y][game->player_x + new_x];
 	if (next_cell == '1')
 		printf("Invalid move\n");
 	else if (next_cell == 'E')
@@ -27,7 +40,7 @@ void	move_player(t_game *game, int new_x, int new_y)
 			printf("Collect all items before exiting\n");
 		else
 		{
-			printf("You win!\n");
+			printf("You win with %d moves!\n", game->count->move_count + 1);
 			close_window(game);
 		}
 	}
@@ -36,9 +49,12 @@ void	move_player(t_game *game, int new_x, int new_y)
 		if (next_cell == 'C')
 			game->collectables++;
 		update_player(game, new_x, new_y);
+		game->count->move_count++;
 		display_map(game, game->map);
+		display_move_count(game);
 	}
 }
+
 
 int	key_press(int keycode, t_game *game)
 {
