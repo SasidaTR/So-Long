@@ -25,7 +25,7 @@ void	initialize_images(t_game *game, t_map *map)
 		error_exit("Failed to load images");
 }
 
-void	initialize_game(t_game *game, t_map *map, t_init *init)
+void	initialize_game(t_game *game, t_map *map)
 {
 	map->design = malloc(sizeof(t_design));
 	if (!map->design)
@@ -34,36 +34,36 @@ void	initialize_game(t_game *game, t_map *map, t_init *init)
 	if (!game->mlx)
 		error_exit("Failed to initialize mlx");
 	initialize_images(game, map);
-	game->win = mlx_new_window(game->mlx, init->width * map->design->img_width,
-			init->height * map->design->img_height, "Nom du jeu");
+	game->win = mlx_new_window(game->mlx, map->width * map->design->img_width,
+			map->height * map->design->img_height, "Nom du jeu");
 	if (!game->win)
 		error_exit("Failed to create window");
 	game->map = map;
 	game->count->move_count = 0;
 }
 
-void	validate_map_border(t_map *map, int *width, int *height)
+void	validate_map_border(t_map *map)
 {
 	int	x;
 	int	y;
 
-	*width = 0;
-	while (map->map[0][*width])
-		(*width)++;
-	*height = 0;
-	while (map->map[*height])
-		(*height)++;
+	map->width = 0;
+	while (map->map[0][map->width])
+		(map->width)++;
+	map->height = 0;
+	while (map->map[map->height])
+		(map->height)++;
 	x = 0;
-	while (x < *width)
+	while (x < map->width)
 	{
-		if (map->map[0][x] != '1' || map->map[*height - 1][x] != '1')
+		if (map->map[0][x] != '1' || map->map[map->height - 1][x] != '1')
 			error_exit("Error: map borders");
 		x++;
 	}
 	y = 0;
-	while (y < *height)
+	while (y < map->height)
 	{
-		if (map->map[y][0] != '1' || map->map[y][*width - 1] != '1')
+		if (map->map[y][0] != '1' || map->map[y][map->width - 1] != '1')
 			error_exit("Error: map borders");
 		y++;
 	}
@@ -71,7 +71,6 @@ void	validate_map_border(t_map *map, int *width, int *height)
 
 int	main(int argc, char **argv)
 {
-	t_init		init;
 	t_game		game;
 	t_map		map;
 	t_count		count;
@@ -80,12 +79,12 @@ int	main(int argc, char **argv)
 		return (printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &map);
-	validate_map_border(&map, &init.width, &init.height);
+	validate_map_border(&map);
 	count_things(&map, &count);
 	game.collectables = 0;
 	game.total_collectables = count.collectables;
 	game.count = &count;
-	initialize_game(&game, &map, &init);
+	initialize_game(&game, &map);
 	display_map(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_key_hook(game.win, key_press, &game);

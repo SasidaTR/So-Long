@@ -54,12 +54,6 @@ typedef struct s_game
 	t_count	*count;
 }	t_game;
 
-typedef struct s_init
-{
-	int		width;
-	int		height;
-}	t_init;
-
 // libft
 char	*ft_itoa(int n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
