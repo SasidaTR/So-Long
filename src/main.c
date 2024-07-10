@@ -1,105 +1,5 @@
 #include "../include/so_long.h"
 
-int	is_valid(int x, int y, t_map *map, int **visited)
-{
-	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
-		return (0);
-	if (map->map[y][x] == '1' || visited[y][x])
-		return (0);
-	return (1);
-}
-
-int	dfs(int x, int y, t_map *map, int **visited, char target)
-{
-	if (map->map[y][x] == target)
-		return (1);
-	visited[y][x] = 1;
-	if (is_valid(x + 1, y, map, visited) && dfs(x + 1, y, map, visited, target))
-		return (1);
-	if (is_valid(x - 1, y, map, visited) && dfs(x - 1, y, map, visited, target))
-		return (1);
-	if (is_valid(x, y + 1, map, visited) && dfs(x, y + 1, map, visited, target))
-		return (1);
-	if (is_valid(x, y - 1, map, visited) && dfs(x, y - 1, map, visited, target))
-		return (1);
-	return (0);
-}
-
-int **allocate_visited(int height, int width)
-{
-	int	**visited;
-	int	i;
-	
-	visited = (int **)malloc(height * sizeof(int *));
-	i = 0;
-	while (i < height)
-	{
-		visited[i] = (int *)malloc(width * sizeof(int));
-		i++;
-	}
-	return visited;
-}
-
-void initialize_visited(int **visited, int height, int width)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < height)
-	{
-		j = 0;
-		while (j < width)
-		{
-			visited[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-}
-
-void find_start(t_map *map, int *start_x, int *start_y)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-			if (map->map[i][j] == 'P')
-			{
-				*start_x = j;
-				*start_y = i;
-				return;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void validate_map_playable(t_map *map)
-{
-	int	**visited;
-	int	start_x;
-	int	start_y;
-
-	visited = allocate_visited(map->height, map->width);
-	initialize_visited(visited, map->height, map->width);
-	find_start(map, &start_x, &start_y);
-	if (!dfs(start_x, start_y, map, visited, 'C'))
-		error_exit("No valid path from P to C");
-	initialize_visited(visited, map->height, map->width);
-	if (!dfs(start_x, start_y, map, visited, 'E'))
-		error_exit("No valid path from P to E");
-	for (int i = 0; i < map->height; i++)
-		free(visited[i]);
-	free(visited);
-}
-
 void	initialize_images(t_game *game, t_map *map)
 {
 	map->zero = mlx_xpm_file_to_image(game->mlx, "graf/0.xpm",
@@ -185,8 +85,8 @@ int	main(int argc, char **argv)
 	game.total_collectables = count.collectables;
 	game.count = &count;
 	initialize_game(&game, &map);
-	validate_map_playable(&map);
 	display_map(&game, &map);
+	validate_map_playable(&game, &map);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_key_hook(game.win, key_press, &game);
 	mlx_loop(game.mlx);

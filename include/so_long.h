@@ -72,5 +72,6 @@ int		get_next_line(int fd, char **line);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
 int		key_press(int keycode, t_game *game);
+void	validate_map_playable(t_game *game, t_map *map);
 
 #endif
