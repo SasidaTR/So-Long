@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:53:15 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 14:53:16 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:55:45 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,7 @@ void	count_things(t_map *map, t_count *count)
 
 int	close_window(t_game *game)
 {
-	if (game->map->design)
-	{
-		if (game->map->design->player_img_up)
-			mlx_destroy_image(game->mlx, game->map->design->player_img_up);
-		if (game->map->design->player_img_down)
-			mlx_destroy_image(game->mlx, game->map->design->player_img_down);
-		if (game->map->design->player_img_left)
-			mlx_destroy_image(game->mlx, game->map->design->player_img_left);
-		if (game->map->design->player_img_right)
-			mlx_destroy_image(game->mlx, game->map->design->player_img_right);
-		free(game->map->design);
-	}
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
+	free_game_resources(game);
 	exit(0);
 	return (0);
 }

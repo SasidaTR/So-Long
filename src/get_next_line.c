@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 15:11:31 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 14:53:24 by trischma         ###   ########.fr       */
+/*   Created: 2024/07/11 15:41:46 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/11 15:41:47 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ static char	*read_line(int fd, char *leftover)
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
 	char	*newline;
+	char	*temp;
 
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
-		leftover = ft_strjoin(leftover, buffer);
+		temp = ft_strjoin(leftover, buffer);
+		free(leftover);
+		leftover = temp;
 		newline = ft_strchr(leftover, '\n');
 		if (newline)
 			return (leftover);

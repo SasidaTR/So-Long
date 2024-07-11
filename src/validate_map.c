@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:53:14 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 14:53:15 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:58:28 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,6 @@ int	dfs(int x, int y, t_map *map, t_dfs *params)
 	return (0);
 }
 
-int	**allocate_visited(int height, int width)
-{
-	int	**visited;
-	int	i;
-
-	visited = (int **)malloc(height * sizeof(int *));
-	i = 0;
-	while (i < height)
-	{
-		visited[i] = (int *)malloc(width * sizeof(int));
-		i++;
-	}
-	return (visited);
-}
-
 void	initialize_visited(int **visited, int height, int width)
 {
 	int	i;
@@ -72,10 +57,28 @@ void	initialize_visited(int **visited, int height, int width)
 	}
 }
 
+int	**allocate_visited(int height, int width)
+{
+	int	**visited;
+	int	i;
+
+	visited = (int **)malloc(height * sizeof(int *));
+	if (!visited)
+		error_exit("Failed to allocate memory for visited");
+	i = 0;
+	while (i < height)
+	{
+		visited[i] = (int *)malloc(width * sizeof(int));
+		if (!visited[i])
+			error_exit("Failed to allocate memory for visited row");
+		i++;
+	}
+	return (visited);
+}
+
 void	validate_map_playable(t_game *game, t_map *map)
 {
 	int		**visited;
-	int		i;
 	int		collectibles_count;
 	t_dfs	params;
 
@@ -95,8 +98,5 @@ void	validate_map_playable(t_game *game, t_map *map)
 	params.target = 'E';
 	if (!dfs(game->player_x, game->player_y, map, &params))
 		error_exit("No valid path from P to E");
-	i = 0;
-	while (i < map->height)
-		free(visited[i++]);
-	free(visited);
+	free_visited(visited, map->height);
 }

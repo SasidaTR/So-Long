@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:53:07 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 14:53:08 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:50:49 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_key_hook(game.win, key_press, &game);
 	mlx_loop(game.mlx);
+	free_game_resources(&game);
 	return (0);
 }

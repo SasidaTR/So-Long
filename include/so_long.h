@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:54:44 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 14:54:45 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:57:44 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		ft_printf(const char *format, ...);
 void	error_exit(char *message);
 int		close_window(t_game *game);
 void	count_things(t_map *map, t_count *count);
+void	free_map(t_map *map);
 
 // src
 int		get_next_line(int fd, char **line);
@@ -106,5 +107,7 @@ void	display_map(t_game *game, t_map *map);
 int		key_press(int keycode, t_game *game);
 void	validate_map_border(t_map *map);
 void	validate_map_playable(t_game *game, t_map *map);
+void	free_visited(int **visited, int height);
+void free_game_resources(t_game *game);
 
 #endif
