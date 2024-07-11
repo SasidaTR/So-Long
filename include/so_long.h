@@ -42,6 +42,13 @@ typedef struct s_map
 	t_design *design;
 }	t_map;
 
+typedef struct s_dfs
+{
+	int	**visited;
+	char	target;
+	int	*collectibles;
+}	t_dfs;
+
 typedef struct s_game
 {
 	void	*mlx;
