@@ -1,5 +1,14 @@
 #include "../include/so_long.h"
 
+void	message_close(t_game *game, const char *message, int type)
+{
+	if (type > 0)
+		ft_printf("%s %d moves\n", message, type);
+	else
+		ft_printf("%s", message);
+	close_window(game);
+}
+
 void	display_move_count(t_game *game)
 {
 	char	*move_count_str;
@@ -43,16 +52,10 @@ void	move_player(t_game *game, int new_x, int new_y)
 		if (game->collectables < game->total_collectables)
 			ft_printf("Collect all items before exiting\n");
 		else
-		{
-			ft_printf("You win with %d moves!\n", game->count->move_count + 1);
-			close_window(game);
-		}
+			message_close(game, "You win with", game->count->move_count + 1);
 	}
 	else if (next_cell == 'M')
-	{
-		ft_printf("You've been caught by police: jail.\n");
-		close_window(game);
-	}
+		message_close(game, "You've been caught by police: jail.\n", 0);
 	else
 	{
 		if (next_cell == 'C')
