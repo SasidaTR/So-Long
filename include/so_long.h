@@ -9,6 +9,14 @@
 # include <stdio.h>
 
 # define BUFFER_SIZE 32
+# define NUM_SPRITES 4
+
+typedef struct s_dfs
+{
+	int			**visited;
+	char		target;
+	int			*collectibles;
+}	t_dfs;
 
 typedef struct s_count
 {
@@ -27,6 +35,8 @@ typedef struct s_design
 	void		*player_img_left;
 	void		*player_img_right;
 	void		*current_player_img;
+	void		*m_imgs[NUM_SPRITES];
+	int			current_monster_img;
 }	t_design;
 
 typedef struct s_map
@@ -43,13 +53,6 @@ typedef struct s_map
 	void		*p;
 	t_design	*design;
 }	t_map;
-
-typedef struct s_dfs
-{
-	int			**visited;
-	char		target;
-	int			*collectibles;
-}	t_dfs;
 
 typedef struct s_game
 {
@@ -89,6 +92,7 @@ int		get_next_line(int fd, char **line);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
 int		key_press(int keycode, t_game *game);
+void	validate_map_border(t_map *map);
 void	validate_map_playable(t_game *game, t_map *map);
 
 #endif

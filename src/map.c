@@ -15,7 +15,8 @@ void	put_image_to_window(t_game *game, t_map *map, int x, int y)
 		mlx_put_image_to_window(game->mlx, game->win, map->e,
 			x * map->design->img_width, y * map->design->img_height);
 	else if (map->map[y][x] == 'M')
-		mlx_put_image_to_window(game->mlx, game->win, map->m,
+		mlx_put_image_to_window(game->mlx, game->win,
+			map->design->m_imgs[map->design->current_monster_img],
 			x * map->design->img_width, y * map->design->img_height);
 	else if (map->map[y][x] == 'P')
 	{

@@ -1,5 +1,32 @@
 #include "../include/so_long.h"
 
+void	validate_map_border(t_map *map)
+{
+	int	x;
+	int	y;
+
+	map->width = 0;
+	while (map->map[0][map->width])
+		(map->width)++;
+	map->height = 0;
+	while (map->map[map->height])
+		(map->height)++;
+	x = 0;
+	while (x < map->width)
+	{
+		if (map->map[0][x] != '1' || map->map[map->height - 1][x] != '1')
+			error_exit("Error: map borders");
+		x++;
+	}
+	y = 0;
+	while (y < map->height)
+	{
+		if (map->map[y][0] != '1' || map->map[y][map->width - 1] != '1')
+			error_exit("Error: map borders");
+		y++;
+	}
+}
+
 void	count_things(t_map *map, t_count *count)
 {
 	int	y;
