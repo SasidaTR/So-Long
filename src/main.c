@@ -10,6 +10,8 @@ void	initialize_images(t_game *game, t_map *map)
 			&map->design->img_width, &map->design->img_height);
 	map->e = mlx_xpm_file_to_image(game->mlx, "graf/e.xpm",
 			&map->design->img_width, &map->design->img_height);
+	map->m = mlx_xpm_file_to_image(game->mlx, "graf/m.xpm",
+			&map->design->img_width, &map->design->img_height);
 	map->design->player_img_up = mlx_xpm_file_to_image(game->mlx,
 			"graf/b.xpm", &map->design->img_width, &map->design->img_height);
 	map->design->player_img_down = mlx_xpm_file_to_image(game->mlx,
@@ -19,7 +21,7 @@ void	initialize_images(t_game *game, t_map *map)
 	map->design->player_img_right = mlx_xpm_file_to_image(game->mlx,
 			"graf/r.xpm", &map->design->img_width, &map->design->img_height);
 	map->design->current_player_img = map->design->player_img_down;
-	if (!map->zero || !map->one || !map->c || !map->e
+	if (!map->zero || !map->one || !map->c || !map->e || !map->m
 		|| !map->design->player_img_up || !map->design->player_img_down
 		|| !map->design->player_img_left || !map->design->player_img_right)
 		error_exit("Failed to load images");
@@ -76,7 +78,7 @@ int	main(int argc, char **argv)
 	t_count		count;
 
 	if (argc != 2)
-		return (printf("Usage: %s <map.ber>\n", argv[0]), 1);
+		return (ft_printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &map);
 	validate_map_border(&map);

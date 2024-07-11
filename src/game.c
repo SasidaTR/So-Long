@@ -37,16 +37,21 @@ void	move_player(t_game *game, int new_x, int new_y)
 
 	next_cell = game->map->map[game->player_y + new_y][game->player_x + new_x];
 	if (next_cell == '1')
-		printf("Invalid move\n");
+		ft_printf("Invalid move\n");
 	else if (next_cell == 'E')
 	{
 		if (game->collectables < game->total_collectables)
-			printf("Collect all items before exiting\n");
+			ft_printf("Collect all items before exiting\n");
 		else
 		{
-			printf("You win with %d moves!\n", game->count->move_count + 1);
+			ft_printf("You win with %d moves!\n", game->count->move_count + 1);
 			close_window(game);
 		}
+	}
+	else if (next_cell == 'M')
+	{
+		ft_printf("You've been caught by police: jail.\n");
+		close_window(game);
 	}
 	else
 	{
