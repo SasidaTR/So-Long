@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:53:07 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 15:50:49 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:21:02 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	update_monster_animation(t_game *game)
 	static int	frame_count = 0;
 
 	frame_count++;
-	if (frame_count >= 100000)
+	if (frame_count >= 60000)
 	{
 		game->map->design->current_monster_img++;
 		if (game->map->design->current_monster_img >= NUM_SPRITES)

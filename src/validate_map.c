@@ -6,7 +6,7 @@
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:53:14 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 15:58:28 by trischma         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:18:43 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_valid(int x, int y, t_map *map, int **visited)
 {
 	if (x < 0 || x >= map->width || y < 0 || y >= map->height)
 		return (0);
-	if (map->map[y][x] == '1' || visited[y][x])
+	if (map->map[y][x] == '1' || map->map[y][x] == 'M' || visited[y][x])
 		return (0);
 	return (1);
 }
