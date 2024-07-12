@@ -82,6 +82,7 @@ typedef struct s_game
 char	*ft_itoa(int n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
+int		ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
@@ -102,6 +103,7 @@ void	free_map(t_map *map);
 
 // src
 int		get_next_line(int fd, char **line);
+void	find_player_position(t_game *game, t_map *map);
 void	get_map_size(char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
 int		key_press(int keycode, t_game *game);

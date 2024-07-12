@@ -98,3 +98,27 @@ void	get_map_size(char *file, t_map *map)
 		map->map[line_count] = NULL;
 	close(fd);
 }
+
+void	find_player_position(t_game *game, t_map *map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (map->map[y])
+	{
+		x = 0;
+		while (map->map[y][x])
+		{
+			if (map->map[y][x] == 'P')
+			{
+				game->player_x = x;
+				game->player_y = y;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+	error_exit("Player position not found");
+}

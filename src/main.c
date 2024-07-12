@@ -94,18 +94,20 @@ int	main(int argc, char **argv)
 	t_map		map;
 	t_count		count;
 
-	if (argc != 2)
+	if (argc != 2 || ft_strlen(argv[1]) < 4
+		|| ft_strcmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber") != 0)
 		return (ft_printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
 	get_map_size(map.map_file, &map);
+	find_player_position(&game, &map);
 	validate_map_border(&map);
 	count_things(&map, &count);
 	game.collectables = 0;
 	game.total_collectables = count.collectables;
 	game.count = &count;
 	initialize_game(&game, &map);
-	display_map(&game, &map);
 	validate_map_playable(&game, &map);
+	display_map(&game, &map);
 	mlx_loop_hook(game.mlx, update_monster_animation, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_key_hook(game.win, key_press, &game);
