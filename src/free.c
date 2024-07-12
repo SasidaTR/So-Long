@@ -79,16 +79,22 @@ void	free_game_resources(t_game *game)
 {
 	if (game->map)
 	{
-		free_map_images(game->map, game->mlx);
 		if (game->map->design)
+		{
 			free_design(game->map->design, game->mlx);
+		}
+		free_map_images(game->map, game->mlx);
 		free_map(game->map);
 	}
 	if (game->win)
+	{
 		mlx_destroy_window(game->mlx, game->win);
+		game->win = NULL;
+	}
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
+		game->mlx = NULL;
 	}
 }

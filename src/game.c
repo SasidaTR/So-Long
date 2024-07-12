@@ -27,7 +27,7 @@ void	display_move_count(t_game *game)
 
 	move_count_str = ft_itoa(game->count->move_count);
 	if (!move_count_str)
-		error_exit("Failed to convert move count to string");
+		error_exit(game, "Failed to convert move count to string");
 	mlx_string_put(game->mlx, game->win, 10, 10, 0x000000, move_count_str);
 	free(move_count_str);
 }

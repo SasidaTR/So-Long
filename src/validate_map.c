@@ -57,20 +57,20 @@ void	initialize_visited(int **visited, int height, int width)
 	}
 }
 
-int	**allocate_visited(int height, int width)
+int	**allocate_visited(t_game *game, int height, int width)
 {
 	int	**visited;
 	int	i;
 
 	visited = (int **)malloc(height * sizeof(int *));
 	if (!visited)
-		error_exit("Failed to allocate memory for visited");
+		error_exit(game, "Failed to allocate memory for visited");
 	i = 0;
 	while (i < height)
 	{
 		visited[i] = (int *)malloc(width * sizeof(int));
 		if (!visited[i])
-			error_exit("Failed to allocate memory for visited row");
+			error_exit(game, "Failed to allocate memory for visited row");
 		i++;
 	}
 	return (visited);
@@ -78,25 +78,29 @@ int	**allocate_visited(int height, int width)
 
 void	validate_map_playable(t_game *game, t_map *map)
 {
-	int		**visited;
 	int		collectibles_count;
 	t_dfs	params;
 
-	visited = allocate_visited(map->height, map->width);
-	initialize_visited(visited, map->height, map->width);
+	params.visited = allocate_visited(game, map->height, map->width);
+	initialize_visited(params.visited, map->height, map->width);
 	collectibles_count = 0;
-	params.visited = visited;
 	params.collectibles = &collectibles_count;
 	if (game->total_collectables > 0)
 	{
 		params.target = ' ';
 		dfs(game->player_x, game->player_y, map, &params);
 		if (collectibles_count != game->total_collectables)
-			error_exit("Not all collectibles are reachable");
+		{
+			free_visited(params.visited, map->height);
+			error_exit(game, "Not all collectibles are reachable");
+		}
 	}
-	initialize_visited(visited, map->height, map->width);
+	initialize_visited(params.visited, map->height, map->width);
 	params.target = 'E';
 	if (!dfs(game->player_x, game->player_y, map, &params))
-		error_exit("No valid path from P to E");
-	free_visited(visited, map->height);
+	{
+		free_visited(params.visited, map->height);
+		error_exit(game, "No valid path from P to E");
+	}
+	free_visited(params.visited, map->height);
 }

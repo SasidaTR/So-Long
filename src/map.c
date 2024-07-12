@@ -58,7 +58,7 @@ void	display_map(t_game *game, t_map *map)
 	}
 }
 
-void	read_map_line(int fd, t_map *map, int *line_count)
+void	read_map_line(t_game *game, int fd, t_map *map, int *line_count)
 {
 	char	*line;
 	char	**temp;
@@ -69,31 +69,31 @@ void	read_map_line(int fd, t_map *map, int *line_count)
 		if (!temp)
 		{
 			free(line);
-			error_exit("Failed to reallocate memory for map content");
+			error_exit(game, "Failed to reallocate memory for map content");
 		}
 		map->map = temp;
 		map->map[*line_count] = ft_strdup(line);
 		if (!map->map[*line_count])
 		{
 			free(line);
-			error_exit("Failed to allocate memory for map content line");
+			error_exit(game, "Failed to allocate memory for map content line");
 		}
 		free(line);
 		(*line_count)++;
 	}
 }
 
-void	get_map_size(char *file, t_map *map)
+void	get_map_size(t_game *game, char *file, t_map *map)
 {
 	int		fd;
 	int		line_count;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error_exit("Failed to open map file");
+		error_exit(game, "Failed to open map file");
 	map->map = NULL;
 	line_count = 0;
-	read_map_line(fd, map, &line_count);
+	read_map_line(game, fd, map, &line_count);
 	if (line_count > 0)
 		map->map[line_count] = NULL;
 	close(fd);
@@ -120,5 +120,5 @@ void	find_player_position(t_game *game, t_map *map)
 		}
 		y++;
 	}
-	error_exit("Player position not found");
+	error_exit(game, "Player position not found");
 }

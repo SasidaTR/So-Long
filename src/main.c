@@ -51,7 +51,7 @@ void	initialize_player_and_monster_images(t_game *game, t_map *map)
 		|| !map->design->player_img_left || !map->design->player_img_right
 		|| !map->design->m_imgs[0] || !map->design->m_imgs[1]
 		|| !map->design->m_imgs[2] || !map->design->m_imgs[3])
-		error_exit("Failed to load player or monster images");
+		error_exit(game, "Failed to load player or monster images");
 }
 
 void	initialize_map_images(t_game *game, t_map *map)
@@ -67,23 +67,23 @@ void	initialize_map_images(t_game *game, t_map *map)
 	map->m = mlx_xpm_file_to_image(game->mlx, "graf/m.xpm",
 			&map->design->img_width, &map->design->img_height);
 	if (!map->zero || !map->one || !map->c || !map->e || !map->m)
-		error_exit("Failed to load map images");
+		error_exit(game, "Failed to load map images");
 }
 
 void	initialize_game(t_game *game, t_map *map)
 {
 	map->design = malloc(sizeof(t_design));
 	if (!map->design)
-		error_exit("Failed to allocate memory for map design");
+		error_exit(game, "Failed to allocate memory for map design");
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		error_exit("Failed to initialize mlx");
+		error_exit(game, "Failed to initialize mlx");
 	initialize_map_images(game, map);
 	initialize_player_and_monster_images(game, map);
 	game->win = mlx_new_window(game->mlx, map->width * map->design->img_width,
 			map->height * map->design->img_height, "Nom du jeu");
 	if (!game->win)
-		error_exit("Failed to create window");
+		error_exit(game, "Failed to create window");
 	game->map = map;
 	game->count->move_count = 0;
 }
@@ -98,10 +98,10 @@ int	main(int argc, char **argv)
 		|| ft_strcmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber") != 0)
 		return (ft_printf("Usage: %s <map.ber>\n", argv[0]), 1);
 	map.map_file = argv[1];
-	get_map_size(map.map_file, &map);
+	get_map_size(&game, map.map_file, &map);
 	find_player_position(&game, &map);
-	validate_map_border(&map);
-	count_things(&map, &count);
+	validate_map_border(&game, &map);
+	count_things(&game, &map, &count);
 	game.collectables = 0;
 	game.total_collectables = count.collectables;
 	game.count = &count;

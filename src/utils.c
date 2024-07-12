@@ -12,7 +12,7 @@
 
 #include "../include/so_long.h"
 
-void	validate_map_border(t_map *map)
+void	validate_map_border(t_game *game, t_map *map)
 {
 	int	x;
 	int	y;
@@ -27,19 +27,19 @@ void	validate_map_border(t_map *map)
 	while (x < map->width)
 	{
 		if (map->map[0][x] != '1' || map->map[map->height - 1][x] != '1')
-			error_exit("Error: map borders");
+			error_exit(game, "Error: map borders");
 		x++;
 	}
 	y = 0;
 	while (y < map->height)
 	{
 		if (map->map[y][0] != '1' || map->map[y][map->width - 1] != '1')
-			error_exit("Error: map borders");
+			error_exit(game, "Error: map borders");
 		y++;
 	}
 }
 
-void	count_things(t_map *map, t_count *count)
+void	count_things(t_game *game, t_map *map, t_count *count)
 {
 	int	y;
 	int	x;
@@ -64,7 +64,7 @@ void	count_things(t_map *map, t_count *count)
 		y++;
 	}
 	if (count->players != 1 || count->exits != 1)
-		error_exit("Map must contain exactly one 'P' and one 'E'");
+		error_exit(game, "Map must contain exactly one 'P' and one 'E'");
 }
 
 int	close_window(t_game *game)
@@ -74,8 +74,9 @@ int	close_window(t_game *game)
 	return (0);
 }
 
-void	error_exit(char *message)
+void	error_exit(t_game *game, char *message)
 {
+	free_game_resources(game);
 	perror(message);
 	exit(EXIT_FAILURE);
 }

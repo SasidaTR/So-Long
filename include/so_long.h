@@ -95,21 +95,19 @@ int		ft_puthex_upper(unsigned int n);
 int		ft_putptr(void *ptr);
 int		ft_printf(const char *format, ...);
 
-// utils
-void	error_exit(char *message);
-int		close_window(t_game *game);
-void	count_things(t_map *map, t_count *count);
-void	free_map(t_map *map);
-
 // src
 int		get_next_line(int fd, char **line);
 void	find_player_position(t_game *game, t_map *map);
-void	get_map_size(char *file, t_map *map);
+void	get_map_size(t_game *game, char *file, t_map *map);
 void	display_map(t_game *game, t_map *map);
 int		key_press(int keycode, t_game *game);
-void	validate_map_border(t_map *map);
+void	validate_map_border(t_game *game, t_map *map);
 void	validate_map_playable(t_game *game, t_map *map);
 void	free_visited(int **visited, int height);
 void	free_game_resources(t_game *game);
+void	error_exit(t_game *game, char *message);
+int		close_window(t_game *game);
+void	count_things(t_game *game, t_map *map, t_count *count);
+void	free_map(t_map *map);
 
 #endif
