@@ -80,9 +80,7 @@ void	free_game_resources(t_game *game)
 	if (game->map)
 	{
 		if (game->map->design)
-		{
 			free_design(game->map->design, game->mlx);
-		}
 		free_map_images(game->map, game->mlx);
 		free_map(game->map);
 	}

@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <string.h>
 
 # define BUFFER_SIZE 32
 # define NUM_SPRITES 4
