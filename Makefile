@@ -9,9 +9,15 @@ OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/src/%.o: src/%.c | $(OBJ_DIR)/src
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/libft/%.o: libft/%.c | $(OBJ_DIR)/libft
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
