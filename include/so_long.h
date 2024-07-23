@@ -107,7 +107,7 @@ void	validate_map_playable(t_game *game, t_map *map);
 void	free_visited(int **visited, int height);
 void	free_game_resources(t_game *game);
 void	error_exit(t_game *game, char *message);
-void	error_exit_two(t_game *game, t_map *map,char *message);
+void	error_exit_two(t_game *game, t_map *map, char *message);
 int		close_window(t_game *game);
 void	count_things(t_game *game, t_map *map, t_count *count);
 void	free_map(t_map *map);
