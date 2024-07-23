@@ -64,8 +64,8 @@ void	count_things(t_game *game, t_map *map, t_count *count)
 		y++;
 	}
 	if (count->players != 1 || count->exits != 1)
-		error_exit(game, "Map must contain exactly one 'P' and one 'E'");
-		// FREE MAP
+		error_exit_two(game, map,
+			"Map must contain exactly one 'P' and one 'E'");
 }
 
 int	close_window(t_game *game)
