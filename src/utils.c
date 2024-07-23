@@ -63,9 +63,9 @@ void	count_things(t_game *game, t_map *map, t_count *count)
 		}
 		y++;
 	}
-	if (count->players != 1 || count->exits != 1)
+	if (count->players != 1 || count->exits != 1 || count->collectables < 1)
 		error_exit_two(game, map,
-			"Map must contain exactly one 'P' and one 'E'");
+			"Map must contain exactly one 'P' and one 'E' and at least 1 'C'");
 }
 
 int	close_window(t_game *game)
