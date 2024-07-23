@@ -120,5 +120,5 @@ void	find_player_position(t_game *game, t_map *map)
 		}
 		y++;
 	}
-	error_exit(game, "Player position not found");
+	error_exit_two(game, map, "Player position not found");
 }
