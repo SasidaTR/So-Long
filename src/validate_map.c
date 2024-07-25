@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 14:53:14 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/12 11:18:43 by trischma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/so_long.h"
 
 int	is_valid(int x, int y, t_map *map, int **visited)
@@ -57,50 +45,50 @@ void	initialize_visited(int **visited, int height, int width)
 	}
 }
 
-int	**allocate_visited(t_game *game, int height, int width)
+int	**allocate_visited(t_gmc *gmc)
 {
 	int	**visited;
 	int	i;
 
-	visited = (int **)malloc(height * sizeof(int *));
+	visited = (int **)malloc(gmc->map->height * sizeof(int *));
 	if (!visited)
-		error_exit(game, "Failed to allocate memory for visited");
+		error_exit(gmc, "Failed to allocate memory for visited");
 	i = 0;
-	while (i < height)
+	while (i < gmc->map->height)
 	{
-		visited[i] = (int *)malloc(width * sizeof(int));
+		visited[i] = (int *)malloc(gmc->map->width * sizeof(int));
 		if (!visited[i])
-			error_exit(game, "Failed to allocate memory for visited row");
+			error_exit(gmc, "Failed to allocate memory for visited row");
 		i++;
 	}
 	return (visited);
 }
 
-void	validate_map_playable(t_game *game, t_map *map)
+void	validate_map_playable(t_gmc *gmc)
 {
 	int		collectibles_count;
 	t_dfs	params;
 
-	params.visited = allocate_visited(game, map->height, map->width);
-	initialize_visited(params.visited, map->height, map->width);
+	params.visited = allocate_visited(gmc);
+	initialize_visited(params.visited, gmc->map->height, gmc->map->width);
 	collectibles_count = 0;
 	params.collectibles = &collectibles_count;
-	if (game->total_collectables > 0)
+	if (gmc->count->collectables > 0)
 	{
 		params.target = ' ';
-		dfs(game->player_x, game->player_y, map, &params);
-		if (collectibles_count != game->total_collectables)
+		dfs(gmc->game->player_x, gmc->game->player_y, gmc->map, &params);
+		if (collectibles_count != gmc->count->collectables)
 		{
-			free_visited(params.visited, map->height);
-			error_exit(game, "Not all collectibles are reachable");
+			free_visited(params.visited, gmc->map->height);
+			error_exit(gmc, "Not all collectibles are reachable");
 		}
 	}
-	initialize_visited(params.visited, map->height, map->width);
+	initialize_visited(params.visited, gmc->map->height, gmc->map->width);
 	params.target = 'E';
-	if (!dfs(game->player_x, game->player_y, map, &params))
+	if (!dfs(gmc->game->player_x, gmc->game->player_y, gmc->map, &params))
 	{
-		free_visited(params.visited, map->height);
-		error_exit(game, "No valid path from P to E");
+		free_visited(params.visited, gmc->map->height);
+		error_exit(gmc, "No valid path from P to E");
 	}
-	free_visited(params.visited, map->height);
+	free_visited(params.visited, gmc->map->height);
 }

@@ -24,6 +24,8 @@ static char	*read_line(int fd, char *leftover)
 	{
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(leftover, buffer);
+		if (!temp)
+			return NULL;
 		free(leftover);
 		leftover = temp;
 		newline = ft_strchr(leftover, '\n');

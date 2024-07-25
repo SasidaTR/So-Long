@@ -1,6 +1,6 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I/usr/include -Imlx_linux -O3
+CFLAGS = -Wall -Werror -Wextra -I/usr/include -Imlx_linux -O3 -g
 LDFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 SRC = $(wildcard src/*.c) $(wildcard libft/*.c)
 OBJ_DIR = obj

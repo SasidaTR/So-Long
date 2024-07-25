@@ -74,10 +74,14 @@ typedef struct s_game
 	int			player_x;
 	int			player_y;
 	int			collectables;
-	int			total_collectables;
-	t_map		*map;
-	t_count		*count;
 }	t_game;
+
+typedef struct s_gmc
+{
+	t_game	*game;
+	t_map	*map;
+	t_count	*count;
+}	t_gmc;
 
 // libft
 char	*ft_itoa(int n);
@@ -86,6 +90,7 @@ char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
 int		ft_putchar(char c);
 int		ft_putstr(char *str);
@@ -97,19 +102,18 @@ int		ft_putptr(void *ptr);
 int		ft_printf(const char *format, ...);
 
 // src
+void	get_map_size(t_gmc *gmc);
 int		get_next_line(int fd, char **line);
-void	find_player_position(t_game *game, t_map *map);
-void	get_map_size(t_game *game, char *file, t_map *map);
-void	display_map(t_game *game, t_map *map);
-int		key_press(int keycode, t_game *game);
-void	validate_map_border(t_game *game, t_map *map);
-void	validate_map_playable(t_game *game, t_map *map);
+void	validate_map_border(t_gmc *gmc);
+void	find_player_position(t_gmc *gmc);
+void	count_things(t_gmc *gmc);
+void	validate_map_playable(t_gmc *gmc);
+void	display_map(t_gmc *gmc);
+int		key_press(int keycode, t_gmc *gmc);
 void	free_visited(int **visited, int height);
-void	free_game_resources(t_game *game);
-void	error_exit(t_game *game, char *message);
-void	error_exit_two(t_game *game, t_map *map, char *message);
-int		close_window(t_game *game);
-void	count_things(t_game *game, t_map *map, t_count *count);
+void	free_game_resources(t_gmc *gmc);
+void	error_exit(t_gmc *gmc, char *message);
+int		close_window(t_gmc *gmc);
 void	free_map(t_map *map);
 
 #endif

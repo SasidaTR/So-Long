@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 15:57:11 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 15:57:29 by trischma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/so_long.h"
 
 void	free_visited(int **visited, int height)
@@ -39,60 +27,66 @@ void	free_map(t_map *map)
 	}
 }
 
-void	free_design(t_design *design, void *mlx)
+void	free_design(t_gmc *gmc)
 {
 	int	i;
 
-	if (design->player_img_up)
-		mlx_destroy_image(mlx, design->player_img_up);
-	if (design->player_img_down)
-		mlx_destroy_image(mlx, design->player_img_down);
-	if (design->player_img_left)
-		mlx_destroy_image(mlx, design->player_img_left);
-	if (design->player_img_right)
-		mlx_destroy_image(mlx, design->player_img_right);
+	if (gmc->map->design->player_img_up)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->design->player_img_up);
+	if (gmc->map->design->player_img_down)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->design->player_img_down);
+	if (gmc->map->design->player_img_left)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->design->player_img_left);
+	if (gmc->map->design->player_img_right)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->design->player_img_right);
 	i = 0;
 	while (i < NUM_SPRITES)
 	{
-		if (design->m_imgs[i])
-			mlx_destroy_image(mlx, design->m_imgs[i]);
+		if (gmc->map->design->m_imgs[i])
+			mlx_destroy_image(gmc->game->mlx, gmc->map->design->m_imgs[i]);
 		i++;
 	}
-	free(design);
+	free(gmc->map->design);
 }
 
-void	free_map_images(t_map *map, void *mlx)
+void	free_map_images(t_gmc *gmc)
 {
-	if (map->zero)
-		mlx_destroy_image(mlx, map->zero);
-	if (map->one)
-		mlx_destroy_image(mlx, map->one);
-	if (map->c)
-		mlx_destroy_image(mlx, map->c);
-	if (map->e)
-		mlx_destroy_image(mlx, map->e);
-	if (map->m)
-		mlx_destroy_image(mlx, map->m);
+	if (gmc->map->zero)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->zero);
+	if (gmc->map->one)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->one);
+	if (gmc->map->c)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->c);
+	if (gmc->map->e)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->e);
+	if (gmc->map->m)
+		mlx_destroy_image(gmc->game->mlx, gmc->map->m);
 }
 
-void	free_game_resources(t_game *game)
+void	free_game_resources(t_gmc *gmc)
 {
-	if (game->map)
+	if (gmc->map->map)
 	{
-		if (game->map->design)
-			free_design(game->map->design, game->mlx);
-		free_map_images(game->map, game->mlx);
-		free_map(game->map);
+		if (gmc->map->design)
+			free_design(gmc);
+		free_map_images(gmc);
+		free_map(gmc->map);
 	}
-	if (game->win)
+	if (gmc->game->win)
 	{
-		mlx_destroy_window(game->mlx, game->win);
-		game->win = NULL;
+		mlx_destroy_window(gmc->game->mlx, gmc->game->win);
+		gmc->game->win = NULL;
 	}
-	if (game->mlx)
+	if (gmc->game->mlx)
 	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-		game->mlx = NULL;
+		mlx_destroy_display(gmc->game->mlx);
+		free(gmc->game->mlx);
+		gmc->game->mlx = NULL;
 	}
+	if (gmc->game)
+		free(gmc->game);
+	if (gmc->map)
+		free(gmc->map);
+	if (gmc->count)
+		free(gmc->count);
 }
