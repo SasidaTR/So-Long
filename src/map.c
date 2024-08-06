@@ -76,7 +76,8 @@ void	read_map_line(t_gmc *gmc, int fd, int *line_count)
 	char	*line;
 	char	**temp;
 
-	while (get_next_line(fd, &line) > 0)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		temp = realloc(gmc->map->map, sizeof(char *) * (*line_count + 2));
 		if (!temp)
@@ -93,6 +94,7 @@ void	read_map_line(t_gmc *gmc, int fd, int *line_count)
 		}
 		free(line);
 		(*line_count)++;
+		line = get_next_line(fd);
 	}
 }
 

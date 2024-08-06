@@ -85,11 +85,11 @@ typedef struct s_gmc
 
 // libft
 char	*ft_itoa(int n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
+void	ft_strcpy(char *dst, const char *src);
 char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
 int		ft_putchar(char c);
@@ -103,7 +103,7 @@ int		ft_printf(const char *format, ...);
 
 // src
 void	get_map_size(t_gmc *gmc);
-int		get_next_line(int fd, char **line);
+char	*get_next_line(int fd);
 void	validate_map_border(t_gmc *gmc);
 void	find_player_position(t_gmc *gmc);
 void	count_things(t_gmc *gmc);

@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trischma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 13:09:30 by trischma          #+#    #+#             */
-/*   Updated: 2024/07/11 14:53:59 by trischma         ###   ########.fr       */
+/*   Created: 2024/05/13 14:09:12 by trischma          #+#    #+#             */
+/*   Updated: 2024/07/12 12:48:14 by trischma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	ft_strcpy(char *dst, const char *src)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-
-	if (!dest && !src)
-		return (NULL);
-	d = (unsigned char *)dest;
-	s = (const unsigned char *)src;
-	while (n-- > 0)
-		*d++ = *s++;
-	return (dest);
+	while (*src)
+		*dst++ = *src++;
+	*dst = '\0';
 }

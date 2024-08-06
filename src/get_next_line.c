@@ -12,74 +12,49 @@
 
 #include "../include/so_long.h"
 
-static char	*read_line(int fd, char *leftover)
+static char	*read_until_newline(int fd, char *buffer)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	int		bytes_read;
+	char	*line;
 	char	*newline;
-	char	*temp;
+	int		countread;
 
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	while (bytes_read > 0)
+	line = ft_strdup(buffer);
+	newline = ft_strchr(line, '\n');
+	while (!newline)
 	{
-		buffer[bytes_read] = '\0';
-		temp = ft_strjoin(leftover, buffer);
-		if (!temp)
-			return NULL;
-		free(leftover);
-		leftover = temp;
-		newline = ft_strchr(leftover, '\n');
-		if (newline)
-			return (leftover);
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		countread = read(fd, buffer, BUFFER_SIZE);
+		if (countread <= 0)
+			break ;
+		buffer[countread] = '\0';
+		line = ft_strjoin(line, buffer);
+		newline = ft_strchr(line, '\n');
 	}
-	return (leftover);
+	return (line);
 }
 
-static int	handle_newline(char **line, char **leftover)
+char	*get_next_line(int fd)
 {
-	char	*newline;
-	char	*temp;
+	static char	buf[BUFFER_SIZE + 1];
+	char		*line;
+	char		*newline;
+	int			to_copy;
 
-	newline = ft_strchr(*leftover, '\n');
-	if (newline)
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
+	line = read_until_newline(fd, buf);
+	if (!line || ft_strlen(line) == 0)
+		return (free(line), NULL);
+	newline = ft_strchr(line, '\n');
+	if (newline != NULL)
 	{
-		*newline = '\0';
-		*line = ft_strdup(*leftover);
-		temp = ft_strdup(newline + 1);
-		free(*leftover);
-		*leftover = temp;
-		return (1);
+		to_copy = newline - line;
+		ft_strcpy(buf, newline + 1);
+		line[to_copy] = '\0';
 	}
-	return (0);
-}
-
-static int	handle_eof(char **line, char **leftover)
-{
-	if (**leftover)
+	else
 	{
-		*line = ft_strdup(*leftover);
-		free(*leftover);
-		*leftover = NULL;
-		return (1);
+		to_copy = ft_strlen(line);
+		buf[0] = '\0';
 	}
-	free(*leftover);
-	*leftover = NULL;
-	return (0);
-}
-
-int	get_next_line(int fd, char **line)
-{
-	static char	*leftover;
-
-	if (!leftover)
-		leftover = ft_strdup("");
-	if (!line || fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (-1);
-	leftover = read_line(fd, leftover);
-	if (!leftover)
-		return (-1);
-	if (handle_newline(line, &leftover))
-		return (1);
-	return (handle_eof(line, &leftover));
+	return (line);
 }

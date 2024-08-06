@@ -16,11 +16,20 @@ char	*ft_strdup(const char *s1)
 {
 	size_t	len;
 	char	*dup;
+	size_t	i;
 
+	if (s1 == NULL)
+		return (NULL);
 	len = ft_strlen(s1);
 	dup = (char *)malloc((len + 1) * sizeof(char));
 	if (!dup)
 		return (NULL);
-	ft_memcpy(dup, s1, len + 1);
+	i = 0;
+	while (i < len)
+	{
+		dup[i] = s1[i];
+		i++;
+	}
+	dup[i] = '\0';
 	return (dup);
 }
